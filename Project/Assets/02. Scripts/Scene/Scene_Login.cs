@@ -1,3 +1,3 @@
-public class Scene_Login : BaseScene
+public class Scene_Login : Scene_Base
 {
 }

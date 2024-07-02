@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerEx
 {
-    public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
+    public Scene_Base CurrentScene { get { return GameObject.FindObjectOfType<Scene_Base>(); } }
 
     public int GetBuildIndex(Define.Scene type)
     {

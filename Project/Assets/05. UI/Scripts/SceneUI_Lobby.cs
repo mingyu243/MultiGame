@@ -5,7 +5,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UI_LobbyScene : BaseSceneUI, INetworkRunnerCallbacks
+public class SceneUI_Lobby : SceneUI_Base, INetworkRunnerCallbacks
 {
     [SerializeField] TMP_Text _nicknameText;
     [SerializeField] GameObject _roomlistElement;

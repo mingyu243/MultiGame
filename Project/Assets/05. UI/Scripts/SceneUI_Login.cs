@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UI_LoginScene : BaseSceneUI
+public class SceneUI_Login : SceneUI_Base
 {
     [SerializeField] TMP_InputField _nicknameInputField;
 
