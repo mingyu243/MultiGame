@@ -5,11 +5,16 @@ public class UI_LoginScene : BaseSceneUI
 {
     [SerializeField] TMP_InputField _nicknameInputField;
 
+    void Start()
+    {
+        _nicknameInputField.text = Managers.Player.Nickname;
+    }
+
     public void OnClickSubmitButton()
     {
-        Scene_Login loginScene = (Scene_Login)Managers.Scene.CurrentScene;
+        Managers.Player.Nickname = _nicknameInputField.text;
 
-        loginScene.SetNickname(_nicknameInputField.text);
-        loginScene.LoadNextScene();
+        Managers.Network.JoinLobby();
+        Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }

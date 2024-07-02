@@ -9,7 +9,7 @@ public class Managers : MonoBehaviour
 
     SceneManagerEx _scene = new SceneManagerEx();
     PlayerManager _player = new PlayerManager();
-    NetworkManager _network = new NetworkManager();
+    NetworkManager _network;
 
     public static SceneManagerEx Scene => Instance._scene;
     public static PlayerManager Player => Instance._player;
@@ -18,5 +18,7 @@ public class Managers : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+        _network = this.gameObject.AddComponent<NetworkManager>();
     }
 }
