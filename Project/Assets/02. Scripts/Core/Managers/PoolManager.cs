@@ -41,17 +41,14 @@ public class PoolManager
     /// <summary>
     /// 풀링한 오브젝트를 가져올 때.
     /// </summary>
-    public GameObject Get(string key, Transform parent = null)
+    public GameObject Get(string key)
     {
         if (_objPoolDict.ContainsKey(key) == false)
         {
             return null;
         }
-        
-        GameObject go = _objPoolDict[key].Get();
-        go.transform.SetParent(parent);
 
-        return go;
+        return _objPoolDict[key].Get();
     }
 
     /// <summary>
@@ -80,7 +77,8 @@ public class PoolManager
         List<GameObject> list = new List<GameObject>();
         for (int i = 0; i < count; i++)
         {
-            GameObject go = Get(key, parent);
+            GameObject go = Get(key);
+            go.transform.SetParent(parent);
             list.Add(go);
         }
         for (int i = 0; i < count; i++)

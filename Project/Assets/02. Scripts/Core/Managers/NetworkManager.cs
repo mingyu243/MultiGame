@@ -4,6 +4,7 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -11,6 +12,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkRunner Runner { get => _runner; set => _runner = value; }
 
     string _lobbyName = "default";
+
+    // 방 목록 캐싱.
+    List<SessionInfo> _sessionList;
+    public List<SessionInfo> SessionList { get => _sessionList; set => _sessionList = value; }
 
     private void Awake()
     {
@@ -20,18 +25,59 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void JoinLobby()
+    public async UniTask<bool> JoinLobbyAsync()
     {
-        Runner.JoinSessionLobby(SessionLobby.Shared, _lobbyName);
+        StartGameResult result = await Runner.JoinSessionLobby(SessionLobby.Shared, _lobbyName);
+        
+        if (result.Ok)
+        {
+            // all good.
+            return true;
+        }
+        else
+        {
+            Debug.LogError($"Failed to Start: {result.ShutdownReason}");
+            return false;
+        }
     }
 
-    public async UniTask JoinRoomAsync(string sessionName)
+    public async UniTask<bool> CreateOrJoinRoomAsync(string roomName)
     {
-        await _runner.StartGame(new StartGameArgs()
+        StartGameResult result = await _runner.StartGame(new StartGameArgs()
         {
             GameMode = GameMode.Shared,
-            SessionName = sessionName,
+            SessionName = roomName,
         });
+
+        if (result.Ok)
+        {
+            // all good.
+            return true;
+        }
+        else
+        {
+            Debug.LogError($"Failed to Start: {result.ShutdownReason}");
+            return false;
+        }
+    }
+
+    public async UniTask<bool> CreateOrJoinRandomRoomAsync()
+    {
+        StartGameResult result = await _runner.StartGame(new StartGameArgs()
+        {
+            GameMode = GameMode.Shared,
+        });
+
+        if (result.Ok)
+        {
+            // all good.
+            return true;
+        }
+        else
+        {
+            Debug.LogError($"Failed to Start: {result.ShutdownReason}");
+            return false;
+        }
     }
 
     public void OnConnectedToServer(NetworkRunner runner) => Debug.Log("OnConnectedToServer");
@@ -50,7 +96,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) => Debug.Log("OnReliableDataReceived");
     public void OnSceneLoadDone(NetworkRunner runner) => Debug.Log("OnSceneLoadDone");
     public void OnSceneLoadStart(NetworkRunner runner) => Debug.Log("OnSceneLoadStart");
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) => Debug.Log("OnSessionListUpdated");
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        Debug.Log("OnSessionListUpdated");
+        SessionList = sessionList;
+    }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) => Debug.Log("OnShutdown");
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) => Debug.Log("OnUserSimulationMessage");
 }

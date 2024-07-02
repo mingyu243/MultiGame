@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -10,11 +11,11 @@ public class SceneUI_Login : SceneUI_Base
         _nicknameInputField.text = Managers.Player.Nickname;
     }
 
-    public void OnClickSubmitButton()
+    public void OnClickOKButton()
     {
         Managers.Player.Nickname = _nicknameInputField.text;
 
-        Managers.Network.JoinLobby();
-        Managers.Scene.LoadScene(Define.Scene.Lobby);
+        Scene_Login loginScene = Managers.Scene.CurrentScene as Scene_Login;
+        loginScene.NextScene();
     }
 }
