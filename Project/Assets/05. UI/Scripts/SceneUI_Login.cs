@@ -1,21 +1,21 @@
 using Cysharp.Threading.Tasks;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneUI_Login : SceneUI_Base
 {
     [SerializeField] TMP_InputField _nicknameInputField;
+    [SerializeField] Button _okButton;
 
-    void Start()
+    public void SetNicknameText(string nickname)
     {
-        _nicknameInputField.text = Managers.Player.Nickname;
+        _nicknameInputField.text = nickname;
     }
 
-    public void OnClickOKButton()
+    public void BindOkButtonEvent(Action<string> onClicked)
     {
-        Managers.Player.Nickname = _nicknameInputField.text;
-
-        Scene_Login loginScene = Managers.Scene.CurrentScene as Scene_Login;
-        loginScene.NextScene();
+        _okButton.onClick.AddListener(() => onClicked?.Invoke(_nicknameInputField.text));
     }
 }

@@ -25,6 +25,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    /// <summary>
+    /// 세션들이 존재하는 로비로 입장.
+    /// 로비도 여러 개 존재할 수 있지만, 이 프로젝트에선 하나로 할 예정.
+    /// </summary>
     public async UniTask<bool> JoinLobbyAsync()
     {
         StartGameResult result = await Runner.JoinSessionLobby(SessionLobby.Shared, _lobbyName);
@@ -41,7 +45,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public async UniTask<bool> CreateOrJoinRoomAsync(string roomName)
+    /// <summary>
+    /// 해당 세션으로 입장.
+    /// </summary>
+    public async UniTask<bool> CreateOrJoinSessionAsync(string roomName)
     {
         StartGameResult result = await _runner.StartGame(new StartGameArgs()
         {
@@ -61,7 +68,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public async UniTask<bool> CreateOrJoinRandomRoomAsync()
+    /// <summary>
+    /// 랜덤 방으로 입장.
+    /// 디폴트 값은 가장 오래된 방부터 입장.
+    /// </summary>
+    public async UniTask<bool> CreateOrJoinRandomSessionAsync()
     {
         StartGameResult result = await _runner.StartGame(new StartGameArgs()
         {

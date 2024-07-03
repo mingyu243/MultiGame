@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 3912111464107632910}
   - component: {fileID: 8160792984409065109}
   m_Layer: 5
-  m_Name: RoomListElement
+  m_Name: SessionListElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,10 +190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4375853190550987419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e5705c15fed8941a25141722c6bffe, type: 3}
+  m_Script: {fileID: 11500000, guid: 633c18c6071bb47448228e8e0a96241b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomNameText: {fileID: 5105838460896560775}
+  _sessionNameText: {fileID: 5105838460896560775}
   _playerCountText: {fileID: 4370395083917701626}
   _button: {fileID: 2773890795888031209}
 --- !u!1 &4957496290787473941
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Room Name
+  m_text: Session Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c24f6c2412238c498a3be0140536569, type: 2}
   m_sharedMaterial: {fileID: 8046513646900233495, guid: 7c24f6c2412238c498a3be0140536569,

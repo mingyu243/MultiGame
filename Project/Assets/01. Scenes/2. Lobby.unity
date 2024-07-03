@@ -624,7 +624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Room List
+  m_text: Session List
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 72236e50cb2b5894a801c8a37b1bb373, type: 2}
   m_sharedMaterial: {fileID: 2493363054792977178, guid: 72236e50cb2b5894a801c8a37b1bb373,
@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 501162036}
   - component: {fileID: 501162035}
   m_Layer: 5
-  m_Name: Create or Join Room
+  m_Name: Create or Join Session
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Create or Join Room
+  m_text: Create or Join Session
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 72236e50cb2b5894a801c8a37b1bb373, type: 2}
   m_sharedMaterial: {fileID: 2493363054792977178, guid: 72236e50cb2b5894a801c8a37b1bb373,
@@ -1973,7 +1973,7 @@ GameObject:
   - component: {fileID: 873339124}
   - component: {fileID: 873339123}
   m_Layer: 5
-  m_Name: Room List
+  m_Name: Session List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2073,7 +2073,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -159.3, y: 0}
-  m_SizeDelta: {x: 273.04, y: 80}
+  m_SizeDelta: {x: 298.93, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &965727905
 MonoBehaviour:
@@ -2097,7 +2097,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Create or Join
 
-    Random Room'
+    Random Session'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c24f6c2412238c498a3be0140536569, type: 2}
   m_sharedMaterial: {fileID: 8046513646900233495, guid: 7c24f6c2412238c498a3be0140536569,
@@ -2469,9 +2469,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nicknameText: {fileID: 2063699748}
-  _joinOrCreateRoomNameInputField: {fileID: 1074695586}
-  _roomlistElementParent: {fileID: 858919710}
-  _roomlistElementPrefab: {fileID: 4375853190550987419, guid: 2326c8f1108860d4082d08b4a72d0ac7,
+  _createOrJoinSessionNameInputField: {fileID: 1074695586}
+  _createOrJoinSessionButton: {fileID: 1470208768}
+  _createOrJoinRandomSessionButton: {fileID: 1884838188}
+  _sessionlistElementParent: {fileID: 858919710}
+  _sessionlistElementPrefab: {fileID: 4375853190550987419, guid: 2326c8f1108860d4082d08b4a72d0ac7,
     type: 3}
 --- !u!1 &1153519435
 GameObject:
@@ -2564,6 +2566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35f90366f3247944a703970b1f309bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneUI: {fileID: 1146211561}
 --- !u!1 &1226426413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2740,7 +2743,7 @@ GameObject:
   - component: {fileID: 1464508463}
   - component: {fileID: 1464508464}
   m_Layer: 5
-  m_Name: CreateOrJoinRoom
+  m_Name: CreateOrJoinSession
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2859,19 +2862,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1470208769}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1146211561}
-        m_TargetAssemblyTypeName: SceneUI_Lobby, Assembly-CSharp
-        m_MethodName: OnClickCreateOrJoinRoomButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1470208769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3722,19 +3713,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1884838189}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1146211561}
-        m_TargetAssemblyTypeName: SceneUI_Lobby, Assembly-CSharp
-        m_MethodName: OnClickCreateOrJoinRandomRoomButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1884838189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4118,7 +4097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Create or Join Room
+  m_text: Create or Join Session
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c24f6c2412238c498a3be0140536569, type: 2}
   m_sharedMaterial: {fileID: 8046513646900233495, guid: 7c24f6c2412238c498a3be0140536569,
@@ -4342,7 +4321,7 @@ GameObject:
   - component: {fileID: 2132693772}
   - component: {fileID: 2132693773}
   m_Layer: 5
-  m_Name: CreateOrJoinRandomRoom
+  m_Name: CreateOrJoinRandomSession
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

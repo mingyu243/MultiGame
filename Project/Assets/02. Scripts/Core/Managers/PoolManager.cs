@@ -35,7 +35,10 @@ public class PoolManager
             _objPoolDict.Add(key, pool);
         }
 
-        PreCreate(key, preCreateCount, preCreateParent);
+        if (preCreateCount > 0)
+        {
+            PreCreate(key, preCreateCount, preCreateParent);
+        }
     }
 
     /// <summary>
@@ -68,11 +71,6 @@ public class PoolManager
 
     void PreCreate(string key, int count, Transform parent = null)
     {
-        if (count <= 0)
-        {
-            return;
-        }
-
         // 미리 생성.
         List<GameObject> list = new List<GameObject>();
         for (int i = 0; i < count; i++)

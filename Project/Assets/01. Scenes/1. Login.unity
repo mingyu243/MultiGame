@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f401bea81a90b941b5e9be73272313a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneUI: {fileID: 1931633446}
 --- !u!1 &630147426
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,19 +747,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1089886080}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1931633446}
-        m_TargetAssemblyTypeName: SceneUI_Login, Assembly-CSharp
-        m_MethodName: OnClickOKButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1089886080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,6 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nicknameInputField: {fileID: 1632773857}
+  _okButton: {fileID: 1089886079}
 --- !u!1 &2007887190
 GameObject:
   m_ObjectHideFlags: 0

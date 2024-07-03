@@ -5,21 +5,30 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SceneUI_Lobby : SceneUI_Base
 {
     [SerializeField] TMP_Text _nicknameText;
 
-    [SerializeField] TMP_InputField _joinOrCreateRoomNameInputField;
+    [SerializeField] TMP_InputField _createOrJoinSessionNameInputField;
+    [SerializeField] Button _createOrJoinSessionButton;
 
-    [SerializeField] Transform _roomlistElementParent;
-    [SerializeField] GameObject _roomlistElementPrefab;
-    List<GameObject> _roomListElements = new();
+    [SerializeField] Button _createOrJoinRandomSessionButton;
+
+    [SerializeField] Transform _sessionlistElementParent;
+    [SerializeField] GameObject _sessionlistElementPrefab;
+    List<GameObject> _sessionListElements = new();
 
     void Start()
     {
-        _nicknameText.text = Managers.Player.Nickname;
-        Managers.Pool.Register("RoomListElement", _roomlistElementPrefab);
+        // 풀링.
+        Managers.Pool.Register("SessionListElement", _sessionlistElementPrefab);
+    }
+
+    public void SetNicknameText(string nickname)
+    {
+        _nicknameText.text = nickname;
     }
 
     /// <summary>
@@ -27,43 +36,42 @@ public class SceneUI_Lobby : SceneUI_Base
     /// 나는 방이 몇개 없을거니까 상관 없을듯.
     /// [참고] https://doc.photonengine.com/fusion/current/manual/connection-and-matchmaking/matchmaking
     /// </summary>
-    public void UpdateRoomList(List<SessionInfo> sessionList)
+    public void UpdateSessionList(List<SessionInfo> sessionList, Action<string> onClicked)
     {
         // 기존에 있던 것 삭제.
-        for (int i = 0; i < _roomListElements.Count; i++)
+        for (int i = 0; i < _sessionListElements.Count; i++)
         {
-            Managers.Pool.Release("RoomListElement", _roomListElements[i]);
+            Managers.Pool.Release("SessionListElement", _sessionListElements[i]);
         }
-        _roomListElements.Clear();
+        _sessionListElements.Clear();
 
         // 생성.
         foreach (SessionInfo session in sessionList)
         {
-            GameObject go = Managers.Pool.Get("RoomListElement");
-            go.transform.SetParent(_roomlistElementParent, false);
-            _roomListElements.Add(go);
+            GameObject go = Managers.Pool.Get("SessionListElement");
+            go.transform.SetParent(_sessionlistElementParent, false);
+            _sessionListElements.Add(go);
 
-            RoomListElement element = go.GetComponent<RoomListElement>();
-            element.SetRoomNameText(session.Name);
+            SessionListElement element = go.GetComponent<SessionListElement>();
+            element.SetSessionNameText(session.Name);
             element.SetPlayerCountText(session.PlayerCount, session.MaxPlayers);
-            element.BindButtonEvent(() => CreateOrJoinRoom(session.Name));
+            element.BindButtonEvent(() => onClicked?.Invoke(session.Name));
         }
     }
 
-    public void OnClickCreateOrJoinRoomButton()
+    public void BindCreateOrJoinSessionButtonEvent(Action<string> onClicked)
     {
-        CreateOrJoinRoom(_joinOrCreateRoomNameInputField.text);
+        _createOrJoinSessionButton.onClick.AddListener(() =>
+        {
+            onClicked?.Invoke(_createOrJoinSessionNameInputField.text);
+        });
     }
 
-    public void OnClickCreateOrJoinRandomRoomButton()
+    public void BindCreateOrJoinRandomSessionButtonEvent(Action onClicked)
     {
-        Scene_Lobby lobbyScene = Managers.Scene.CurrentScene as Scene_Lobby;
-        lobbyScene.CreateOrJoinRandomRoom();
-    }
-
-    void CreateOrJoinRoom(string roomName)
-    {
-        Scene_Lobby lobbyScene = Managers.Scene.CurrentScene as Scene_Lobby;
-        lobbyScene.CreateOrJoinRoom(roomName);
+        _createOrJoinRandomSessionButton.onClick.AddListener(() =>
+        {
+            onClicked?.Invoke();
+        });
     }
 }

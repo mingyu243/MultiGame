@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 
 public class Scene_Lobby : Scene_Base, INetworkRunnerCallbacks
 {
+    [SerializeField] SceneUI_Lobby _sceneUI;
+
     void Awake()
     {
         SceneType = Define.Scene.Lobby;
@@ -16,9 +18,13 @@ public class Scene_Lobby : Scene_Base, INetworkRunnerCallbacks
 
     void Start()
     {
+        // UI에 데이터 삽입.
+        _sceneUI.SetNicknameText(Managers.Player.Nickname);
+        _sceneUI.BindCreateOrJoinSessionButtonEvent(CreateOrJoinSession);
+        _sceneUI.BindCreateOrJoinRandomSessionButtonEvent(CreateOrJoinRandomSession);
+
         // 처음에는 수동으로 방 목록을 업데이트 해줘야 함.
-        SceneUI_Lobby lobbySceneUI = Managers.UI.CurrentSceneUI as SceneUI_Lobby;
-        lobbySceneUI.UpdateRoomList(Managers.Network.SessionList);
+        _sceneUI.UpdateSessionList(Managers.Network.SessionList, CreateOrJoinSession);
     }
 
     private void OnDestroy()
@@ -26,26 +32,26 @@ public class Scene_Lobby : Scene_Base, INetworkRunnerCallbacks
         Managers.Network.Runner.RemoveCallbacks(this);
     }
 
-    public void CreateOrJoinRoom(string roomName)
+    void CreateOrJoinSession(string sessionName)
     {
-        CreateOrJoinRoomAsync().Forget();
+        CreateOrJoinSessionAsync().Forget();
 
-        async UniTask CreateOrJoinRoomAsync()
+        async UniTask CreateOrJoinSessionAsync()
         {
-            bool isJoin = await Managers.Network.CreateOrJoinRoomAsync(roomName);
+            bool isJoin = await Managers.Network.CreateOrJoinSessionAsync(sessionName);
             if (isJoin)
             {
             }
         }
     }
 
-    public void CreateOrJoinRandomRoom()
+    void CreateOrJoinRandomSession()
     {
-        CreateOrJoinRandomRoomAsync().Forget();
+        CreateOrJoinRandomSessionAsync().Forget();
 
-        async UniTask CreateOrJoinRandomRoomAsync()
+        async UniTask CreateOrJoinRandomSessionAsync()
         {
-            bool isJoin = await Managers.Network.CreateOrJoinRandomRoomAsync();
+            bool isJoin = await Managers.Network.CreateOrJoinRandomSessionAsync();
             if (isJoin)
             {
             }
@@ -56,8 +62,7 @@ public class Scene_Lobby : Scene_Base, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) 
     {
-        SceneUI_Lobby lobbySceneUI = Managers.UI.CurrentSceneUI as SceneUI_Lobby;
-        lobbySceneUI.UpdateRoomList(sessionList);
+        _sceneUI.UpdateSessionList(sessionList, CreateOrJoinSession);
     }
 
     public void OnConnectedToServer(NetworkRunner runner) { }

@@ -6,15 +6,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class RoomListElement : MonoBehaviour
+public class SessionListElement : MonoBehaviour
 {
-    [SerializeField] TMP_Text _roomNameText;
+    [SerializeField] TMP_Text _sessionNameText;
     [SerializeField] TMP_Text _playerCountText;
     [SerializeField] Button _button;
 
-    public void SetRoomNameText(string roomName)
+    public void SetSessionNameText(string sessionName)
     {
-        _roomNameText.text = roomName;
+        _sessionNameText.text = sessionName;
     }
 
     public void SetPlayerCountText(int current, int max)
