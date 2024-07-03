@@ -34,33 +34,17 @@ public class Scene_Lobby : Scene_Base, INetworkRunnerCallbacks
 
     void CreateOrJoinSession(string sessionName)
     {
-        CreateOrJoinSessionAsync().Forget();
-
-        async UniTask CreateOrJoinSessionAsync()
-        {
-            bool isJoin = await Managers.Network.CreateOrJoinSessionAsync(sessionName);
-            if (isJoin)
-            {
-            }
-        }
+        Managers.Network.CreateOrJoinSessionAsync(sessionName).Forget();
     }
 
     void CreateOrJoinRandomSession()
     {
-        CreateOrJoinRandomSessionAsync().Forget();
-
-        async UniTask CreateOrJoinRandomSessionAsync()
-        {
-            bool isJoin = await Managers.Network.CreateOrJoinRandomSessionAsync();
-            if (isJoin)
-            {
-            }
-        }
+        Managers.Network.CreateOrJoinRandomSessionAsync().Forget();
     }
 
     #region INetworkRunnerCallbacks
 
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) 
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
         _sceneUI.UpdateSessionList(sessionList, CreateOrJoinSession);
     }

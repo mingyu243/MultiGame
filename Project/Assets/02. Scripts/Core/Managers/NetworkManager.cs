@@ -48,12 +48,13 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     /// <summary>
     /// 해당 세션으로 입장.
     /// </summary>
-    public async UniTask<bool> CreateOrJoinSessionAsync(string roomName)
+    public async UniTask<bool> CreateOrJoinSessionAsync(string sessionName)
     {
         StartGameResult result = await _runner.StartGame(new StartGameArgs()
         {
             GameMode = GameMode.Shared,
-            SessionName = roomName,
+            SessionName = sessionName,
+            Scene = SceneRef.FromIndex((int)Define.Scene.WaitingRoom)
         });
 
         if (result.Ok)
