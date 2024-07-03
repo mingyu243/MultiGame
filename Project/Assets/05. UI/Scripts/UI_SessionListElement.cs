@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SessionListElement : MonoBehaviour
+public class UI_SessionListElement : UI_Base
 {
     [SerializeField] TMP_Text _sessionNameText;
     [SerializeField] TMP_Text _playerCountText;

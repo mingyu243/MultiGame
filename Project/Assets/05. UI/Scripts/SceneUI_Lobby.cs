@@ -52,7 +52,7 @@ public class SceneUI_Lobby : SceneUI_Base
             go.transform.SetParent(_sessionlistElementParent, false);
             _sessionListElements.Add(go);
 
-            SessionListElement element = go.GetComponent<SessionListElement>();
+            UI_SessionListElement element = go.GetComponent<UI_SessionListElement>();
             element.SetSessionNameText(session.Name);
             element.SetPlayerCountText(session.PlayerCount, session.MaxPlayers);
             element.BindButtonEvent(() => onClicked?.Invoke(session.Name));
