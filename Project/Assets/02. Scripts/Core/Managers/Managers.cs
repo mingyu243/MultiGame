@@ -10,6 +10,7 @@ public class Managers : MonoBehaviour
     UIManager _ui = new UIManager();
     SceneManagerEx _scene = new SceneManagerEx();
     PoolManager _pool = new PoolManager();
+    AddressableManager _addressable = new AddressableManager();
 
     PlayerManager _player = new PlayerManager();
     NetworkManager _network;
@@ -19,6 +20,7 @@ public class Managers : MonoBehaviour
     public static PlayerManager Player => Instance._player;
     public static NetworkManager Network => Instance._network;
     public static PoolManager Pool => Instance._pool;
+    public static AddressableManager Addressable => Instance._addressable;
 
     void Awake()
     {

@@ -4,7 +4,6 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -16,6 +15,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     // 방 목록 캐싱.
     List<SessionInfo> _sessionList;
     public List<SessionInfo> SessionList { get => _sessionList; set => _sessionList = value; }
+
+    // 내 플레이어 컨트롤러.
+    PlayerController _playerController;
+    public PlayerController PlayerController { get => _playerController; set => _playerController = value; }
 
     private void Awake()
     {
@@ -32,7 +35,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public async UniTask<bool> JoinLobbyAsync()
     {
         StartGameResult result = await Runner.JoinSessionLobby(SessionLobby.Shared, _lobbyName);
-        
+
         if (result.Ok)
         {
             // all good.
@@ -92,6 +95,30 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    void SpawnLocalPlayerController(PlayerRef player)
+    {
+        if (Runner.LocalPlayer == player)
+        {
+            // PlayerController 생성.
+            AddressableManager.LoadAssetAsync("PlayerController", (prefab) =>
+            {
+                NetworkObject no = Runner.Spawn(prefab, Vector3.zero, Quaternion.identity, player);
+                PlayerController = no.gameObject.GetComponent<PlayerController>();
+            }).Forget();
+        }
+    }
+
+    void DespawnLocalPlayerController(PlayerRef player)
+    {
+        if (Runner.TryGetPlayerObject(player, out NetworkObject networkObject))
+        {
+            Runner.Despawn(networkObject);
+            PlayerController = null;
+        }
+    }
+
+    #region INetworkRunnerCallbacks
+
     public void OnConnectedToServer(NetworkRunner runner) => Debug.Log("OnConnectedToServer");
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) => Debug.Log("OnConnectFailed");
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) => Debug.Log("OnConnectRequest");
@@ -102,8 +129,16 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) => Debug.Log("OnInputMissing");
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) => Debug.Log("OnObjectEnterAOI");
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) => Debug.Log("OnObjectExitAOI");
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) => Debug.Log("OnPlayerJoined");
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) => Debug.Log("OnPlayerLeft");
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log("OnPlayerJoined");
+        SpawnLocalPlayerController(player);
+    }
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log("OnPlayerLeft");
+        DespawnLocalPlayerController(player);
+    }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) => Debug.Log("OnReliableDataProgress");
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) => Debug.Log("OnReliableDataReceived");
     public void OnSceneLoadDone(NetworkRunner runner) => Debug.Log("OnSceneLoadDone");
@@ -115,4 +150,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) => Debug.Log("OnShutdown");
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) => Debug.Log("OnUserSimulationMessage");
+
+    #endregion
 }

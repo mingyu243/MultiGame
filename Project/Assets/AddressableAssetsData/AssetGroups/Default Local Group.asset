@@ -17,8 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f0deaa69a63849a41b051a867d017470
   m_SerializeEntries:
+  - m_GUID: 572c7a3e5a76f08479ce652205d0bfc3
+    m_Address: Character_WaitingRoom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c64c4f5fd3af9e6418688f66b80fce29
-    m_Address: Assets/03. Prefabs/PlayerController.prefab
+    m_Address: PlayerController
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
