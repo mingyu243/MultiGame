@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8499117994273556036}
   - component: {fileID: 8872770342613629635}
   m_Layer: 0
-  m_Name: Player
+  m_Name: AsteroidsLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836dcb7e0f6259748b850a10912ce727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransformMode: 1
+  TransformMode: 0
   Transform2DVertical:
     IsEnabled: 0
     Height:
@@ -144,12 +144,12 @@ MonoBehaviour:
     SourceCollider: {fileID: 0}
     IsEnabled: 1
     Shape2D:
-      ShapeType: 0
+      ShapeType: 1
       PolygonCollider:
         Id:
           Value: 0
       CircleRadius:
-        RawValue: 0
+        RawValue: 72090
       CapsuleSize:
         X:
           RawValue: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
       IsPersistent: 1
       CompoundShapes: []
     Shape3D:
-      ShapeType: 1
+      ShapeType: 2
       SphereRadius:
         RawValue: 32768
       CapsuleRadius:

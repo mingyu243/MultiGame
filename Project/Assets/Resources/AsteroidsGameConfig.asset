@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d988b02c532f144928a72787811d9c, type: 3}
+  m_Name: AsteroidsGameConfig
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: Resources/AsteroidsGameConfig
+    Guid:
+      Value: 478146223447084336
+  AsteroidPrototype:
+    Id:
+      Value: 1463884454936566797
+  AsteroidInitialSpeed:
+    RawValue: 196608
+  AsteroidInitialTorqueMin:
+    RawValue: 458752
+  AsteroidInitialTorqueMax:
+    RawValue: 1310720
+  AsteroidSpawnDistanceToCenter:
+    RawValue: 1310720
+  InitialAsteroidsCount: 5
