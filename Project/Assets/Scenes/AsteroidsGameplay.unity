@@ -1992,8 +1992,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2259,7 +2259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0413bd8db4f29e3488d92156dc397190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Asset: {fileID: 11400000, guid: e2f5ffe85896ea94f83d9bb068f25a89, type: 2}
+  Asset: {fileID: 11400000, guid: f29d820654b31d54da699b054b7ea469, type: 2}
   BakeAllMode: 112
   NavMeshSerializeType: 0
   StaticCollider2DReferences: []
