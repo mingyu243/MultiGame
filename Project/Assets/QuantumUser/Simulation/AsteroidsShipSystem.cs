@@ -7,7 +7,7 @@ using UnityEngine.Scripting;
 namespace Quantum.Asteroids
 {
     [Preserve]
-    public unsafe class AsteroidShipSystem : SystemMainThreadFilter<AsteroidShipSystem.Filter>
+    public unsafe class AsteroidsShipSystem : SystemMainThreadFilter<AsteroidsShipSystem.Filter>
     {
         public override void Update(Frame f, ref Filter filter)
         {
@@ -18,6 +18,7 @@ namespace Quantum.Asteroids
             }
 
             UpdateShipMovement(f, ref filter, input);
+            UpdateShipFire(f, ref filter, input);
         }
 
         public struct Filter
@@ -30,8 +31,9 @@ namespace Quantum.Asteroids
 
         private void UpdateShipMovement(Frame f, ref Filter filter, Input* input)
         {
-            FP shipAcceleration = 7;
-            FP turnSpeed = 8;
+            var config = f.FindAsset(filter.AsteroidsShip->ShipConfig);
+            FP shipAcceleration = config.ShipAceleration;
+            FP turnSpeed = config.ShipTurnSpeed;
 
             if (input->Up)
             {
@@ -49,6 +51,24 @@ namespace Quantum.Asteroids
             }
 
             filter.Body->AngularVelocity = FPMath.Clamp(filter.Body->AngularVelocity, -turnSpeed, turnSpeed);
+        }
+
+        private void UpdateShipFire(Frame f, ref Filter filter, Input* input)
+        {
+            var config = f.FindAsset(filter.AsteroidsShip->ShipConfig);
+
+            if (input->Fire && filter.AsteroidsShip->FireInterval <= 0)
+            {
+                filter.AsteroidsShip->FireInterval = config.FireInterval;
+
+                var relativeOffset = FPVector2.Up * config.ShotOffset;
+                var spawnPosition = filter.Transform->TransformPoint(relativeOffset);
+                f.Signals.AsteroidsShipShoot(filter.Entity, spawnPosition, config.ProjectilePrototype);
+            }
+            else
+            {
+                filter.AsteroidsShip->FireInterval -= f.DeltaTime;
+            }
         }
     }
 }
