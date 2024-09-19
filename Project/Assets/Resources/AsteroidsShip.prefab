@@ -127,7 +127,7 @@ MonoBehaviour:
     LayerSource: 0
     Layer: 0
     CallbackFlags:
-      Value: 0
+      Value: 2
   PhysicsBody:
     IsEnabled: 1
     Config2D: 116
@@ -238,6 +238,8 @@ MonoBehaviour:
     ShipConfig:
       Id:
         Value: 488186659036516483
+    FireInterval:
+      RawValue: 0
 --- !u!1 &3105612478582600301
 GameObject:
   m_ObjectHideFlags: 0
